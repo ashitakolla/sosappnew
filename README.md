@@ -1,16 +1,20 @@
-# sosappnew
+# SOS App
 
-A new Flutter project.
+## Features
+- **Emergency Guide**: Quick steps and resources for handling emergencies.
+- **Medical Records**: Store and access essential medical information.
+- **Training Videos**: Learn safety protocols with video tutorials.
+- **Kit Checklist**: Ensure your emergency kit is always ready.
+- **Local Services**: Contact nearby emergency and support services.
+- **Family Help**: Notify and update family members during emergencies.
 
-## Getting Started
+## Installation
+1. Clone the repository: `git clone https://github.com/ashflawless10/sosappnew.git`
+2. Open the project in your preferred IDE.
+3. Run the app on an emulator or connected device.
 
-This project is a starting point for a Flutter application.
+## Contributions
+Contributions are welcome! Feel free to submit issues or pull requests.
 
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## License
+This project is licensed under the MIT License.
