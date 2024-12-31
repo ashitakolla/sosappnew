@@ -45,7 +45,13 @@ class LocalServicesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Local Emergency Services'),
+        title: Text(
+          'Local Emergency Services',
+          style: TextStyle(
+            fontWeight: FontWeight.bold, // Bold the text
+            color: Colors.white,         // Set text color to white
+          ),
+        ),
         backgroundColor: Color(0xff1f597c),
       ),
       body: Container(
@@ -60,7 +66,7 @@ class LocalServicesPage extends StatelessWidget {
                 title: Text(
                   service['name']!,
                   style: TextStyle(
-                    fontSize: 18.0,
+                    fontSize: 20.0,
                     fontWeight: FontWeight.bold,
                     color: Color(0xff1f597c),
                   ),
@@ -111,4 +117,3 @@ class LocalServicesPage extends StatelessWidget {
     }
   }
 }
-

@@ -34,6 +34,11 @@ class _AshChatbotState extends State<AshChatbot> {
   };
 
   String currentDialog = "start";
+  
+  // Adjustable colors
+  Color userTextColor = Color.fromARGB(255, 85, 99, 110);  // Default text color for user
+  Color ashTextColor = Color(0xFF000000);   // Default text color for Ash
+  Color buttonTextColor = Colors.white;      // Default button text color
 
   @override
   void initState() {
@@ -49,37 +54,14 @@ class _AshChatbotState extends State<AshChatbot> {
         chatHistory.add({"role": "ash", "text": "Here are your options for $action:"});
       } else {
         chatHistory.add({"role": "ash", "text": "$action selected."});
-        // Handle navigation based on selected option
-        if (action == "emergency_guide") {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => EmergencyGuidePage()),
-          );
-        } else if (action == "medical_records") {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => MedicalRecordsPage()),
-          );
-        } else if (action == "training_videos") {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => SimulationsPage()),
-          );
-        } else if (action == "kit_checklist") {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => KitChecklistPage()),
-          );
-        } else if (action == "local_services") {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => LocalServicesPage()),
-          );
-        } else if (action == "family_help") {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => FamilyHelpPage()),
-          );
+        // Here we trigger a confirmation dialog before navigating
+        if (action == "emergency_guide" ||
+            action == "medical_records" ||
+            action == "training_videos" ||
+            action == "kit_checklist" ||
+            action == "local_services" ||
+            action == "family_help") {
+          _showConfirmationDialog(action);
         } else if (action == "medical_emergencies") {
           Navigator.push(
             context,
@@ -100,6 +82,78 @@ class _AshChatbotState extends State<AshChatbot> {
     });
   }
 
+  // Function to show a confirmation dialog
+  void _showConfirmationDialog(String action) {
+    showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          title: Text("Are you sure?"),
+          content: Text("Do you want to navigate to the $action section?"),
+          actions: [
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+              child: Text("Cancel"),
+            ),
+            TextButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+                _navigateToSection(action); // Proceed with navigation
+              },
+              child: Text("Yes"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  // Function to navigate to the selected section
+  void _navigateToSection(String action) {
+    switch (action) {
+      case "emergency_guide":
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => EmergencyGuidePage()),
+        );
+        break;
+      case "medical_records":
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => MedicalRecordsPage()),
+        );
+        break;
+      case "training_videos":
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => SimulationsPage()),
+        );
+        break;
+      case "kit_checklist":
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => KitChecklistPage()),
+        );
+        break;
+      case "local_services":
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => LocalServicesPage()),
+        );
+        break;
+      case "family_help":
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => FamilyHelpPage()),
+        );
+        break;
+      default:
+        break;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -107,6 +161,7 @@ class _AshChatbotState extends State<AshChatbot> {
         title: Text("Ash - Your SOS Assistant"),
         backgroundColor: Color(0xff1f597c),
       ),
+      backgroundColor: Color.fromRGBO(189, 208, 214, 1), // Apply the background color here
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
@@ -131,7 +186,7 @@ class _AshChatbotState extends State<AshChatbot> {
                           borderRadius: BorderRadius.circular(20),
                           boxShadow: [
                             BoxShadow(
-                              color: Colors.black.withOpacity(0.2),
+                              color: const Color.fromARGB(255, 255, 255, 255).withOpacity(0.2),
                               blurRadius: 6,
                               offset: Offset(0, 2),
                             ),
@@ -143,8 +198,8 @@ class _AshChatbotState extends State<AshChatbot> {
                             fontSize: 18,
                             fontWeight: FontWeight.w500,
                             color: message["role"] == "user"
-                                ? Colors.blue
-                                : Colors.black,
+                                ? userTextColor
+                                : ashTextColor,  // Use adjustable color
                           ),
                         ),
                       ),
@@ -156,26 +211,55 @@ class _AshChatbotState extends State<AshChatbot> {
             if (dialogs.containsKey(currentDialog))
               Padding(
                 padding: const EdgeInsets.only(top: 10.0),
-                child: Wrap(
-                  spacing: 10,
-                  runSpacing: 10,
-                  children: dialogs[currentDialog]!
-                      .map((option) => ElevatedButton(
-                            onPressed: () => selectOption(option["action"]!),
-                            style: ElevatedButton.styleFrom(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 12),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              backgroundColor: getColor(option["color"]!),
-                            ),
-                            child: Text(
-                              option["text"]!,
-                              style: TextStyle(fontSize: 16),
-                            ),
-                          ))
-                      .toList(),
+                child: Column(
+                  children: [
+                    Text(
+                      "Select an option to explore more:",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black,
+                      ),
+                    ),
+                    SizedBox(height: 10),
+                    Container(
+                      padding: EdgeInsets.all(16),
+                      decoration: BoxDecoration(
+                        color: Color.fromRGBO(75, 90, 101, 1),
+                        borderRadius: BorderRadius.circular(12),
+                        boxShadow: [
+                          BoxShadow(
+                            color: Color.fromARGB(255, 158, 158, 158).withOpacity(0.1),
+                            blurRadius: 8,
+                            offset: Offset(0, 4),
+                          ),
+                        ],
+                      ),
+                      child: Wrap(
+                        spacing: 10,
+                        runSpacing: 10,
+                        children: dialogs[currentDialog]!
+                            .map((option) => ElevatedButton(
+                                  onPressed: () => selectOption(option["action"]!),
+                                  style: ElevatedButton.styleFrom(
+                                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    backgroundColor: getColor(option["color"]!),
+                                  ),
+                                  child: Text(
+                                    option["text"]!,
+                                    style: TextStyle(
+                                      fontSize: 16,
+                                      color: buttonTextColor,  // Adjustable text color
+                                    ),
+                                  ),
+                                ))
+                            .toList(),
+                      ),
+                    ),
+                  ],
                 ),
               ),
           ],
@@ -199,12 +283,6 @@ class _AshChatbotState extends State<AshChatbot> {
         return Color(0xffa263cd);
       case '0xffd37db2': // Family Help
         return Color(0xffd37db2);
-      case '0xffef8750': // Medical Emergencies
-        return Color(0xffef8750);
-      case '0xff85bc3a': // Natural Disasters
-        return Color(0xff85bc3a);
-      case '0xfff3c636': // Fire Emergencies
-        return Color(0xfff3c636);
       default:
         return Colors.blueAccent;
     }
