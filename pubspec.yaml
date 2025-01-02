@@ -15,17 +15,17 @@ dependencies:
   flutter_local_notifications: ^17.2.2
   timezone: ^0.9.4
   url_launcher: ^6.1.7
-  permission_handler: ^11.3.1
+  permission_handler: ^10.0.0 # Keep this version
   cupertino_icons: ^1.0.6
   sqflite: ^2.3.3+1
   video_player: ^2.5.1
   shared_preferences: ^2.3.3
   flutter_tts: ^3.5.0
+  image_picker: ^0.8.7+4
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
-
   flutter_lints: ^4.0.0
 
 flutter:
@@ -41,13 +41,8 @@ flutter:
     - assets/videos/earthquake_video.mp4
     - assets/videos/flood_video.mp4
     - assets/videos/fire_safety.mp4
-    
 
-  # To add custom fonts to your application, add a fonts section here,
-  # in this "flutter" section. Each entry in this list should have a
-  # "family" key with the font family name, and a "fonts" key with a
-  # list giving the asset and other descriptors for the font. For
-  # example:
+  # Optional: You can add custom fonts here if needed
   # fonts:
   #   - family: Schyler
   #     fonts:

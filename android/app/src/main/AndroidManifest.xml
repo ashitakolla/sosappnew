@@ -1,16 +1,19 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.yourappname">
 
-    <!-- Add the INTERNET permission here -->
+    <!-- Permissions -->
     <uses-permission android:name="android.permission.INTERNET" />
-    
-    <!-- Add the CALL_PHONE permission here -->
     <uses-permission android:name="android.permission.CALL_PHONE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:label="sosappnew"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
+        android:requestLegacyExternalStorage="true">
+
         <activity
             android:name=".MainActivity"
             android:exported="true"
@@ -20,7 +23,7 @@
             android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|locale|layoutDirection|fontScale|screenLayout|density|uiMode"
             android:hardwareAccelerated="true"
             android:windowSoftInputMode="adjustResize">
-            
+
             <meta-data
                 android:name="io.flutter.embedding.android.NormalTheme"
                 android:resource="@style/NormalTheme" />
@@ -31,18 +34,23 @@
             </intent-filter>
         </activity>
 
-        <!-- Don't delete the meta-data below.
-             This is used by the Flutter tool to generate GeneratedPluginRegistrant.java -->
+        <!-- Meta-data for Flutter plugin generation -->
         <meta-data
             android:name="flutterEmbedding"
             android:value="2" />
     </application>
-    
-    <!-- Required to query activities that can process text -->
+
+    <!-- Queries for gallery and camera -->
     <queries>
+        <!-- Camera action -->
         <intent>
-            <action android:name="android.intent.action.PROCESS_TEXT" />
-            <data android:mimeType="text/plain" />
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+
+        <!-- Gallery action -->
+        <intent>
+            <action android:name="android.intent.action.PICK" />
+            <data android:mimeType="image/*" />
         </intent>
     </queries>
 </manifest>

@@ -14,6 +14,7 @@ import 'screens/family_help.dart';
 import 'screens/medical_records_page.dart'; // Import the Medical Records screen
 import 'screens/ash_chatbot.dart' as ashChatbot;  // Alias to resolve ambiguity
 import 'screens/dialogs.dart';  // Import DialogPage
+import 'screens/user_profile_page.dart';  // Import the UserProfilePage
 
 // Initialize Flutter Local Notifications
 final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
@@ -98,6 +99,7 @@ class MyApp extends StatelessWidget {
         '/medical_records': (context) => MedicalRecordsPage(), // Added Medical Records route
         '/chatbot': (context) => ashChatbot.AshChatbot(),  // Use alias
         '/dialog': (context) => DialogPage(),  // Added dialog route
+        '/user_profile': (context) => UserProfilePage(),  // Add route for UserProfilePage
       },
     );
   }

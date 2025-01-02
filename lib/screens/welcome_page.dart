@@ -1,4 +1,3 @@
-// lib/screens/welcome_page.dart
 import 'package:flutter/material.dart';
 
 class WelcomePage extends StatelessWidget {
@@ -51,7 +50,7 @@ class WelcomePage extends StatelessWidget {
               // Centered button
               ElevatedButton(
                 onPressed: () {
-                  Navigator.pushNamed(context, '/feature_buttons');
+                  Navigator.pushNamed(context, '/user_profile');
                 },
                 child: Text("Let's Get Started"),
                 style: ElevatedButton.styleFrom(
