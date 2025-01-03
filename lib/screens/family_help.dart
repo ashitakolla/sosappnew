@@ -27,7 +27,7 @@ class _FamilyHelpPageState extends State<FamilyHelpPage> {
 
   // Fetch contacts from the server
   Future<void> _fetchContacts() async {
-    const String baseUrl = 'http://192.168.1.6:5000';
+    const String baseUrl = 'http://192.168.142.249:5000';
     try {
       final response = await http.get(Uri.parse('$baseUrl/contacts'));
 

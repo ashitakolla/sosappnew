@@ -42,7 +42,7 @@ void main() async {
 // HTTP API functions
 Future<void> addContact(String name, String phone) async {
   final response = await http.post(
-    Uri.parse('http://192.168.1.6:5000/contacts'), // Ensure the IP address is correct and server is running
+    Uri.parse('http://192.168.142.249:5000/contacts'), // Ensure the IP address is correct and server is running
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },
@@ -61,7 +61,7 @@ Future<void> addContact(String name, String phone) async {
 
 Future<void> addMedication(String name, String dosage, String time) async {
   final response = await http.post(
-    Uri.parse('http://192.168.1.6:5000/medications'), // Ensure the IP address is correct and server is running
+    Uri.parse('http://192.168.142.249:5000/medications'), // Ensure the IP address is correct and server is running
     headers: <String, String>{
       'Content-Type': 'application/json; charset=UTF-8',
     },

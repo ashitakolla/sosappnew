@@ -146,4 +146,4 @@ def test_db():
 # Start the server
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000, debug=True)
-    logging.info("Server is running on http://192.168.1.6:5000")
+    logging.info("Server is running on http://192.168.142.249:5000")

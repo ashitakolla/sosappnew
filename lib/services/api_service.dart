@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 // Replace with your backend API base URL
-const String baseUrl = 'http://192.168.1.6:5000';
+const String baseUrl = 'http://192.168.142.249:5000';
 
 // Function to add a contact
 Future<void> addContact(String name, String phone) async {
