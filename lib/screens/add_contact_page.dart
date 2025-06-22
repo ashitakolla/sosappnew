@@ -12,7 +12,8 @@ class _AddContactPageState extends State<AddContactPage> {
   final TextEditingController phoneController = TextEditingController();
 
   // Backend API URL
-  final String apiUrl = "http://192.168.1.6:5000/contacts"; // Use 10.0.2.2 for Android Emulator
+  final String apiUrl =
+      "http://192.168.1.4:5000/contacts"; // Use 10.0.2.2 for Android Emulator
 
   @override
   void dispose() {
@@ -46,10 +47,13 @@ class _AddContactPageState extends State<AddContactPage> {
           );
 
           // Go back to the FamilyHelpPage
-          Navigator.pop(context); // This will navigate back to the previous screen (FamilyHelpPage)
+          Navigator.pop(
+              context); // This will navigate back to the previous screen (FamilyHelpPage)
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text('Failed to save contact. Status: ${response.statusCode}')),
+            SnackBar(
+                content: Text(
+                    'Failed to save contact. Status: ${response.statusCode}')),
           );
         }
       } catch (e) {

@@ -1,0 +1,46 @@
+Medical Records Guide
+
+This document outlines the structure and importance of maintaining up-to-date personal medical records. It includes three main sections: Personal Information, Contact Information, and Medical Information.
+
+---
+
+Personal Information
+
+- Name: The individual's full legal name.
+- Age: The current age in years.
+- Gender: Male, Female, or Other as specified by the individual.
+- Date of Birth: The individual's date of birth (DD/MM/YYYY or MM/DD/YYYY format).
+
+---
+
+Contact Information
+
+- Phone: A reachable phone number, preferably mobile.
+- Email: A valid email address for communication.
+- Emergency Contact: The name and phone number of a trusted contact to be notified during an emergency.
+
+---
+
+Medical Information
+
+- Blood Type: The person's blood group (e.g., A+, B-, O+, AB-, etc.).
+- Allergies: Any known allergies, including medication, food, environmental, etc.
+- Current Medication: A list of medications the person is currently taking, including dosage and frequency.
+- Current Conditions: Any ongoing medical conditions like asthma, diabetes, high blood pressure, etc.
+- Medical History: A summary of the individual’s past health issues, illnesses, and treatments.
+- Surgeries: Any surgical procedures the individual has undergone, including dates and outcomes.
+- Treatments: Ongoing treatments such as physiotherapy, dialysis, chemotherapy, etc.
+- Insurance Info: Details of medical or health insurance plans, policy number, and provider.
+- Family Medical History: Health conditions that run in the family, such as hereditary diseases or common illnesses among relatives.
+
+---
+
+Editing Medical Records
+
+The app provides an editable form where users can update all the above fields. It is essential to keep these records current to ensure accurate and fast response in emergencies or medical appointments.
+
+Each section is saved securely and can be reviewed or edited by the user at any time within the app.
+
+---
+
+End of Guide

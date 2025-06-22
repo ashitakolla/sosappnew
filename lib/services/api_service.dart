@@ -2,7 +2,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 // Replace with your backend API base URL
-const String baseUrl = 'http://192.168.142.249:5000';
+const String baseUrl = 'http://192.168.1.4:5000';
 
 // Function to add a contact
 Future<void> addContact(String name, String phone) async {
@@ -46,7 +46,8 @@ Future<void> addMedication(String name, String dosage, String time) async {
     if (response.statusCode == 201) {
       print('Medication added successfully');
     } else {
-      print('Failed to add medication: ${response.statusCode} ${response.body}');
+      print(
+          'Failed to add medication: ${response.statusCode} ${response.body}');
     }
   } catch (e) {
     print('Error occurred while adding medication: $e');
@@ -62,7 +63,8 @@ Future<List<dynamic>> getContacts() async {
       List<dynamic> contacts = jsonDecode(response.body);
       return contacts;
     } else {
-      print('Failed to retrieve contacts: ${response.statusCode} ${response.body}');
+      print(
+          'Failed to retrieve contacts: ${response.statusCode} ${response.body}');
       return [];
     }
   } catch (e) {
@@ -80,7 +82,8 @@ Future<List<dynamic>> getMedications() async {
       List<dynamic> medications = jsonDecode(response.body);
       return medications;
     } else {
-      print('Failed to retrieve medications: ${response.statusCode} ${response.body}');
+      print(
+          'Failed to retrieve medications: ${response.statusCode} ${response.body}');
       return [];
     }
   } catch (e) {
@@ -90,7 +93,8 @@ Future<List<dynamic>> getMedications() async {
 }
 
 // Function to update a medication
-Future<void> updateMedication(String medicationId, {String? name, String? dosage, String? time}) async {
+Future<void> updateMedication(String medicationId,
+    {String? name, String? dosage, String? time}) async {
   try {
     final Map<String, dynamic> body = {};
     if (name != null) body['name'] = name;
@@ -108,7 +112,8 @@ Future<void> updateMedication(String medicationId, {String? name, String? dosage
     if (response.statusCode == 200) {
       print('Medication updated successfully');
     } else {
-      print('Failed to update medication: ${response.statusCode} ${response.body}');
+      print(
+          'Failed to update medication: ${response.statusCode} ${response.body}');
     }
   } catch (e) {
     print('Error occurred while updating medication: $e');
@@ -125,7 +130,8 @@ Future<void> deleteMedication(String medicationId) async {
     if (response.statusCode == 200) {
       print('Medication deleted successfully');
     } else {
-      print('Failed to delete medication: ${response.statusCode} ${response.body}');
+      print(
+          'Failed to delete medication: ${response.statusCode} ${response.body}');
     }
   } catch (e) {
     print('Error occurred while deleting medication: $e');

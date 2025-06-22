@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart'; // For Date formatting
+import 'package:intl/intl.dart';
 
 class MedicalRecordsForm extends StatefulWidget {
+  final String? initialName;
+  final String? initialAge;
+  final String? initialGender;
+  final String? initialContactInfo;
   final String? initialBloodType;
   final String? initialAllergies;
   final String? initialDOB;
@@ -9,12 +13,17 @@ class MedicalRecordsForm extends StatefulWidget {
   final String? initialMedicalHistory;
   final String? initialMedications;
   final String? initialCurrentConditions;
-  final String? initialName;
-  final String? initialAge;
-  final String? initialGender;
-  final String? initialContactInfo;
+  final String? initialPhone;
+  final String? initialEmail;
+  final String? initialSurgeries;
+  final String? initialInsurance;
+  final String? initialFamilyHistory;
 
   MedicalRecordsForm({
+    this.initialName,
+    this.initialAge,
+    this.initialGender,
+    this.initialContactInfo,
     this.initialBloodType,
     this.initialAllergies,
     this.initialDOB,
@@ -22,10 +31,11 @@ class MedicalRecordsForm extends StatefulWidget {
     this.initialMedicalHistory,
     this.initialMedications,
     this.initialCurrentConditions,
-    this.initialName,
-    this.initialAge,
-    this.initialGender,
-    this.initialContactInfo,
+    this.initialPhone,
+    this.initialEmail,
+    this.initialSurgeries,
+    this.initialInsurance,
+    this.initialFamilyHistory,
   });
 
   @override
@@ -34,6 +44,10 @@ class MedicalRecordsForm extends StatefulWidget {
 
 class _MedicalRecordsFormState extends State<MedicalRecordsForm> {
   final _formKey = GlobalKey<FormState>();
+
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _ageController = TextEditingController();
+  final TextEditingController _contactInfoController = TextEditingController();
   final TextEditingController _bloodTypeController = TextEditingController();
   final TextEditingController _allergiesController = TextEditingController();
   final TextEditingController _dobController = TextEditingController();
@@ -41,14 +55,22 @@ class _MedicalRecordsFormState extends State<MedicalRecordsForm> {
   final TextEditingController _medicalHistoryController = TextEditingController();
   final TextEditingController _medicationsController = TextEditingController();
   final TextEditingController _currentConditionsController = TextEditingController();
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _ageController = TextEditingController();
-  final TextEditingController _contactInfoController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _surgeriesController = TextEditingController();
+  final TextEditingController _insuranceController = TextEditingController();
+  final TextEditingController _familyHistoryController = TextEditingController();
+
   String? _selectedGender;
+  final List<String> _bloodTypes = ['O+', 'O-', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-'];
 
   @override
   void initState() {
     super.initState();
+    _nameController.text = widget.initialName ?? '';
+    _ageController.text = widget.initialAge ?? '';
+    _selectedGender = widget.initialGender;
+    _contactInfoController.text = widget.initialContactInfo ?? '';
     _bloodTypeController.text = widget.initialBloodType ?? '';
     _allergiesController.text = widget.initialAllergies ?? '';
     _dobController.text = widget.initialDOB ?? '';
@@ -56,24 +78,22 @@ class _MedicalRecordsFormState extends State<MedicalRecordsForm> {
     _medicalHistoryController.text = widget.initialMedicalHistory ?? '';
     _medicationsController.text = widget.initialMedications ?? '';
     _currentConditionsController.text = widget.initialCurrentConditions ?? '';
-    _nameController.text = widget.initialName ?? '';
-    _ageController.text = widget.initialAge ?? '';
-    _contactInfoController.text = widget.initialContactInfo ?? '';
-    _selectedGender = widget.initialGender;
+    _phoneController.text = widget.initialPhone ?? '';
+    _emailController.text = widget.initialEmail ?? '';
+    _surgeriesController.text = widget.initialSurgeries ?? '';
+    _insuranceController.text = widget.initialInsurance ?? '';
+    _familyHistoryController.text = widget.initialFamilyHistory ?? '';
   }
 
   Future<void> _selectDate(BuildContext context) async {
-    DateTime currentDate = DateTime.now();
-    DateTime? pickedDate = await showDatePicker(
+    DateTime? picked = await showDatePicker(
       context: context,
       initialDate: DateTime.now(),
       firstDate: DateTime(1900),
-      lastDate: currentDate,
+      lastDate: DateTime.now(),
     );
-    if (pickedDate != null && pickedDate != DateTime.now()) {
-      setState(() {
-        _dobController.text = DateFormat('MM/dd/yyyy').format(pickedDate);
-      });
+    if (picked != null) {
+      _dobController.text = DateFormat('MM/dd/yyyy').format(picked);
     }
   }
 
@@ -81,210 +101,113 @@ class _MedicalRecordsFormState extends State<MedicalRecordsForm> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          'Medical Records Form',
-          style: TextStyle(
-            color: Colors.white,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        title: Text('Medical Records Form', style: TextStyle(color: Colors.white)),
         backgroundColor: Color(0xff1f597c),
       ),
       body: Container(
         color: Color(0xffbdd0d6),
-        padding: const EdgeInsets.all(16.0),
-        child: Center(
-          child: SingleChildScrollView(
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(16),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.1),
-                    spreadRadius: 2,
-                    blurRadius: 10,
-                  ),
-                ],
-              ),
-              padding: const EdgeInsets.all(16.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    // Name Input
-                    TextFormField(
-                      controller: _nameController,
-                      decoration: InputDecoration(
-                        labelText: 'Name',
-                      ),
-                      style: TextStyle(fontSize: 20),
-                    ),
-
-                    // Age Input
-                    TextFormField(
-                      controller: _ageController,
-                      decoration: InputDecoration(
-                        labelText: 'Age',
-                      ),
-                      keyboardType: TextInputType.number,
-                      style: TextStyle(fontSize: 20),
-                    ),
-
-                    // Gender Dropdown
-                    DropdownButtonFormField<String>(
-                      value: _selectedGender,
-                      hint: Text('Select Gender'),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _selectedGender = newValue;
-                        });
-                      },
-                      items: ['Male', 'Female', 'Other']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value, style: TextStyle(fontSize: 20)),
-                        );
-                      }).toList(),
-                    ),
-
-                    // Contact Info Input
-                    TextFormField(
-                      controller: _contactInfoController,
-                      decoration: InputDecoration(
-                        labelText: 'Contact Information',
-                      ),
-                      style: TextStyle(fontSize: 20),
-                    ),
-
-                    // Blood Type Picker
-                    DropdownButtonFormField<String>(
-                      value: _bloodTypeController.text.isNotEmpty
-                          ? _bloodTypeController.text
-                          : null,
-                      hint: Text('Select Blood Type'),
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _bloodTypeController.text = newValue!;
-                        });
-                      },
-                      items: ['O+', 'O-', 'A+', 'A-', 'B+', 'B-', 'AB+', 'AB-']
-                          .map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value, style: TextStyle(fontSize: 20)),
-                        );
-                      }).toList(),
-                    ),
-
-                    // Allergies Input
-                    TextFormField(
-                      controller: _allergiesController,
-                      decoration: InputDecoration(
-                        labelText: 'Allergies',
-                      ),
-                      style: TextStyle(fontSize: 20),
-                    ),
-
-                    // Date of Birth Picker
-                    GestureDetector(
-                      onTap: () => _selectDate(context),
-                      child: AbsorbPointer(
-                        child: TextFormField(
-                          controller: _dobController,
-                          decoration: InputDecoration(
-                            labelText: 'Date of Birth',
-                            hintText: 'MM/DD/YYYY',
-                          ),
-                          style: TextStyle(fontSize: 20),
-                        ),
-                      ),
-                    ),
-
-                    // Emergency Contact Input
-                    TextFormField(
-                      controller: _emergencyContactController,
-                      decoration: InputDecoration(
-                        labelText: 'Emergency Contact',
-                      ),
-                      style: TextStyle(fontSize: 20),
-                    ),
-
-                    // Medical History Input
-                    TextFormField(
-                      controller: _medicalHistoryController,
-                      decoration: InputDecoration(
-                        labelText: 'Medical History',
-                      ),
-                      style: TextStyle(fontSize: 20),
-                    ),
-
-                    // Medications Input
-                    TextFormField(
-                      controller: _medicationsController,
-                      decoration: InputDecoration(
-                        labelText: 'Medications',
-                      ),
-                      style: TextStyle(fontSize: 20),
-                    ),
-
-                    // Current Conditions Input
-                    TextFormField(
-                      controller: _currentConditionsController,
-                      decoration: InputDecoration(
-                        labelText: 'Current Conditions',
-                      ),
-                      style: TextStyle(fontSize: 20),
-                    ),
-
-                    SizedBox(height: 20),
-                    ElevatedButton(
-                      onPressed: () {
-                        if (_formKey.currentState?.validate() ?? false) {
-                          final updatedName = _nameController.text;
-                          final updatedAge = _ageController.text;
-                          final updatedGender = _selectedGender;
-                          final updatedContactInfo = _contactInfoController.text;
-                          final updatedBloodType = _bloodTypeController.text;
-                          final updatedAllergies = _allergiesController.text;
-                          final updatedDOB = _dobController.text;
-                          final updatedEmergencyContact = _emergencyContactController.text;
-                          final updatedMedicalHistory = _medicalHistoryController.text;
-                          final updatedMedications = _medicationsController.text;
-                          final updatedCurrentConditions = _currentConditionsController.text;
-
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(content: Text('Medical records updated')),
-                          );
-
-                          Navigator.pop(context, {
-                            'name': updatedName,
-                            'age': updatedAge,
-                            'gender': updatedGender,
-                            'contactInfo': updatedContactInfo,
-                            'bloodType': updatedBloodType,
-                            'allergies': updatedAllergies,
-                            'dob': updatedDOB,
-                            'emergencyContact': updatedEmergencyContact,
-                            'medicalHistory': updatedMedicalHistory,
-                            'medications': updatedMedications,
-                            'currentConditions': updatedCurrentConditions,
-                          });
-                        }
-                      },
-                      style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xff1f597c),
-                      ),
-                      child: Text('Save', style: TextStyle(color: Colors.white)),
-                    ),
-                  ],
+        padding: EdgeInsets.all(16),
+        child: SingleChildScrollView(
+          child: Container(
+            padding: EdgeInsets.all(16),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(16),
+              boxShadow: [BoxShadow(color: Colors.black26, blurRadius: 10)],
+            ),
+            child: Form(
+              key: _formKey,
+              child: Column(children: [
+                _buildTextField(_nameController, 'Name'),
+                _buildTextField(_ageController, 'Age', keyboard: TextInputType.number),
+                _buildDropdownField('Gender', ['Male', 'Female', 'Other'], _selectedGender, (val) {
+                  setState(() => _selectedGender = val);
+                }),
+                _buildTextField(_contactInfoController, 'Contact Info'),
+                _buildDropdownField(
+                  'Blood Type',
+                  _bloodTypes,
+                  _bloodTypes.contains(_bloodTypeController.text) ? _bloodTypeController.text : null,
+                  (val) {
+                    setState(() => _bloodTypeController.text = val ?? '');
+                  },
                 ),
-              ),
+                _buildTextField(_allergiesController, 'Allergies'),
+                _buildDateField(_dobController, 'Date of Birth'),
+                _buildTextField(_emergencyContactController, 'Emergency Contact'),
+                _buildTextField(_medicalHistoryController, 'Medical History'),
+                _buildTextField(_medicationsController, 'Medications'),
+                _buildTextField(_currentConditionsController, 'Current Conditions'),
+                _buildTextField(_phoneController, 'Phone'),
+                _buildTextField(_emailController, 'Email'),
+                _buildTextField(_surgeriesController, 'Surgeries'),
+                _buildTextField(_insuranceController, 'Insurance'),
+                _buildTextField(_familyHistoryController, 'Family History'),
+                SizedBox(height: 20),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      Navigator.pop(context, {
+                        'name': _nameController.text,
+                        'age': _ageController.text,
+                        'gender': _selectedGender,
+                        'contactInfo': _contactInfoController.text,
+                        'bloodType': _bloodTypeController.text,
+                        'allergies': _allergiesController.text,
+                        'dob': _dobController.text,
+                        'emergencyContact': _emergencyContactController.text,
+                        'medicalHistory': _medicalHistoryController.text,
+                        'medications': _medicationsController.text,
+                        'currentConditions': _currentConditionsController.text,
+                        'phone': _phoneController.text,
+                        'email': _emailController.text,
+                        'surgeries': _surgeriesController.text,
+                        'insurance': _insuranceController.text,
+                        'familyHistory': _familyHistoryController.text,
+                      });
+                    }
+                  },
+                  child: Text('Save', style: TextStyle(color: Colors.white)),
+                  style: ElevatedButton.styleFrom(backgroundColor: Color(0xff1f597c)),
+                )
+              ]),
             ),
           ),
         ),
+      ),
+    );
+  }
+
+  Widget _buildTextField(TextEditingController controller, String label,
+      {TextInputType keyboard = TextInputType.text}) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
+      child: TextFormField(
+        controller: controller,
+        decoration: InputDecoration(labelText: label),
+        keyboardType: keyboard,
+        style: TextStyle(fontSize: 18),
+      ),
+    );
+  }
+
+  Widget _buildDropdownField(String label, List<String> items, String? value, Function(String?) onChanged) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6.0),
+      child: DropdownButtonFormField<String>(
+        value: items.contains(value) ? value : null,
+        hint: Text(label),
+        onChanged: onChanged,
+        items: items.map((e) => DropdownMenuItem(child: Text(e), value: e)).toList(),
+      ),
+    );
+  }
+
+  Widget _buildDateField(TextEditingController controller, String label) {
+    return GestureDetector(
+      onTap: () => _selectDate(context),
+      child: AbsorbPointer(
+        child: _buildTextField(controller, label),
       ),
     );
   }

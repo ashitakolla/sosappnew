@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'medical_records_form_page.dart'; // Import the form page
+import 'medical_records_form_page.dart'; // Your form page
 
 class MedicalRecordsPage extends StatefulWidget {
   @override
@@ -7,48 +7,91 @@ class MedicalRecordsPage extends StatefulWidget {
 }
 
 class _MedicalRecordsPageState extends State<MedicalRecordsPage> {
+  // Full Medical Record Fields
   String name = '';
   String age = '';
   String gender = '';
-  String contactInfo = '';
-  String profilePicture = 'assets/profile.jpg'; // Assuming you have an image in assets
+  String dob = '';
+  String phone = '';
+  String email = '';
+  String emergencyContact = '';
   String bloodType = '';
   String allergies = '';
-  String dob = '';
-  String emergencyContact = '';
-  String medicalHistory = '';
   String medications = '';
   String currentConditions = '';
+  String medicalHistory = '';
+  String surgeries = '';
+  String insurance = '';
+  String familyHistory = '';
 
-  // Method to navigate to the edit form and get updated data
+  // Navigate to edit form and retrieve updated info
   void _editMedicalRecords() async {
     final updatedRecords = await Navigator.push(
       context,
       MaterialPageRoute(
         builder: (context) => MedicalRecordsForm(
+          initialName: name,
+          initialAge: age,
+          initialGender: gender,
+          initialDOB: dob,
+          initialPhone: phone,
+          initialEmail: email,
+          initialEmergencyContact: emergencyContact,
           initialBloodType: bloodType,
           initialAllergies: allergies,
-          initialDOB: dob,
-          initialEmergencyContact: emergencyContact,
-          initialMedicalHistory: medicalHistory,
           initialMedications: medications,
           initialCurrentConditions: currentConditions,
+          initialMedicalHistory: medicalHistory,
+          initialSurgeries: surgeries,
+          initialInsurance: insurance,
+          initialFamilyHistory: familyHistory,
         ),
       ),
     );
 
-    // If updated records are not null, update the state with the new data
     if (updatedRecords != null) {
       setState(() {
+        name = updatedRecords['name'] ?? '';
+        age = updatedRecords['age'] ?? '';
+        gender = updatedRecords['gender'] ?? '';
+        dob = updatedRecords['dob'] ?? '';
+        phone = updatedRecords['phone'] ?? '';
+        email = updatedRecords['email'] ?? '';
+        emergencyContact = updatedRecords['emergencyContact'] ?? '';
         bloodType = updatedRecords['bloodType'] ?? '';
         allergies = updatedRecords['allergies'] ?? '';
-        dob = updatedRecords['dob'] ?? '';
-        emergencyContact = updatedRecords['emergencyContact'] ?? '';
-        medicalHistory = updatedRecords['medicalHistory'] ?? '';
         medications = updatedRecords['medications'] ?? '';
         currentConditions = updatedRecords['currentConditions'] ?? '';
+        medicalHistory = updatedRecords['medicalHistory'] ?? '';
+        surgeries = updatedRecords['surgeries'] ?? '';
+        insurance = updatedRecords['insurance'] ?? '';
+        familyHistory = updatedRecords['familyHistory'] ?? '';
       });
     }
+  }
+
+  Widget _buildSectionTitle(String title) {
+    return Padding(
+      padding: const EdgeInsets.only(top: 20.0, bottom: 8),
+      child: Text(
+        title,
+        style: TextStyle(
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+          color: Color(0xff1f597c),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildInfoText(String label, String value) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 2),
+      child: Text(
+        '$label: ${value.isNotEmpty ? value : "Not Provided"}',
+        style: TextStyle(fontSize: 16),
+      ),
+    );
   }
 
   @override
@@ -56,63 +99,47 @@ class _MedicalRecordsPageState extends State<MedicalRecordsPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff1f597c),
-        title: Text(
-          'Medical Records',
-          style: TextStyle(color: Colors.white),
-        ),
+        title: Text('Medical Records', style: TextStyle(color: Colors.white)),
       ),
-      backgroundColor: Color(0xffbdd0d6),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      backgroundColor: Color(0xffe6eff1),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            // Patient Details Section
-            Row(
-              children: [
-                CircleAvatar(
-                  radius: 50,
-                  backgroundImage: AssetImage(profilePicture),
-                ),
-                SizedBox(width: 16),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text('Name: $name', style: TextStyle(fontSize: 18)),
-                    Text('Age: $age', style: TextStyle(fontSize: 18)),
-                    Text('Gender: $gender', style: TextStyle(fontSize: 18)),
-                    Text('Contact Info: $contactInfo', style: TextStyle(fontSize: 18)),
-                  ],
-                ),
-              ],
-            ),
-            SizedBox(height: 20),
+          children: [
+            _buildSectionTitle('Personal Information'),
+            _buildInfoText('Name', name),
+            _buildInfoText('Age', age),
+            _buildInfoText('Gender', gender),
+            _buildInfoText('Date of Birth', dob),
 
-            // Medical Records Section
-            Text(
-              'Medical Records:',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Color(0xff1f597c),
-              ),
-            ),
-            SizedBox(height: 20),
-            Text('Blood Type: $bloodType', style: TextStyle(fontSize: 18)),
-            Text('Allergies: $allergies', style: TextStyle(fontSize: 18)),
-            Text('Date of Birth: $dob', style: TextStyle(fontSize: 18)),
-            Text('Emergency Contact: $emergencyContact', style: TextStyle(fontSize: 18)),
-            Text('Medical History: $medicalHistory', style: TextStyle(fontSize: 18)),
-            Text('Medications: $medications', style: TextStyle(fontSize: 18)),
-            Text('Current Conditions: $currentConditions', style: TextStyle(fontSize: 18)),
+            _buildSectionTitle('Contact Information'),
+            _buildInfoText('Phone', phone),
+            _buildInfoText('Email', email),
+            _buildInfoText('Emergency Contact', emergencyContact),
+
+            _buildSectionTitle('Medical Information'),
+            _buildInfoText('Blood Type', bloodType),
+            _buildInfoText('Allergies', allergies),
+            _buildInfoText('Current Medications', medications),
+            _buildInfoText('Current Conditions', currentConditions),
+            _buildInfoText('Medical History', medicalHistory),
+            _buildInfoText('Surgeries / Treatments', surgeries),
+            _buildInfoText('Insurance Info', insurance),
+            _buildInfoText('Family Medical History', familyHistory),
+
             SizedBox(height: 30),
-            ElevatedButton(
-              onPressed: _editMedicalRecords,
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.white,
-                foregroundColor: Color(0xff1f597c),
+            Center(
+              child: ElevatedButton.icon(
+                onPressed: _editMedicalRecords,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color(0xff1f597c),
+                  foregroundColor: Colors.white,
+                  padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                ),
+                icon: Icon(Icons.edit),
+                label: Text('Edit Medical Records'),
               ),
-              child: Text('Edit Medical Records'),
             ),
           ],
         ),

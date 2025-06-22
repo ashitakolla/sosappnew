@@ -21,7 +21,7 @@ class LocalServicesPage extends StatelessWidget {
     },
     {
       'name': 'Poison Control',
-      'number': '1066',
+      'number': '1800116117',
       'description': 'For poisoning emergencies and advice.',
     },
     {

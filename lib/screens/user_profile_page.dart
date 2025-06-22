@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:permission_handler/permission_handler.dart';
+import '../models/user.dart';
+import '../services/user_session.dart';
 
 class UserProfilePage extends StatefulWidget {
   @override
@@ -9,16 +11,21 @@ class UserProfilePage extends StatefulWidget {
 }
 
 class _UserProfilePageState extends State<UserProfilePage> {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController ageController = TextEditingController();
-  final TextEditingController genderController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
+  final _formKey = GlobalKey<FormState>();
+
+  final nameController = TextEditingController();
+  final ageController = TextEditingController();
+  final genderController = TextEditingController();
+  final phoneController = TextEditingController();
+  final emailController = TextEditingController();
+  final addressController = TextEditingController();
+  final bloodGroupController = TextEditingController();
+  final emergencyContactController = TextEditingController();
+  final medicalHistoryController = TextEditingController();
 
   File? _image;
 
-  // Function to check and request permissions
+  // Permission check
   Future<bool> _checkPermissions() async {
     PermissionStatus cameraStatus = await Permission.camera.request();
     PermissionStatus storageStatus = await Permission.storage.request();
@@ -33,7 +40,7 @@ class _UserProfilePageState extends State<UserProfilePage> {
     }
   }
 
-  // Function to pick an image from the gallery or take a new picture using the camera
+  // Image Picker
   Future<void> _pickImage() async {
     try {
       bool hasPermission = await _checkPermissions();
@@ -67,7 +74,6 @@ class _UserProfilePageState extends State<UserProfilePage> {
       if (source == null) return;
 
       final XFile? image = await _picker.pickImage(source: source);
-
       if (image != null) {
         setState(() {
           _image = File(image.path);
@@ -85,46 +91,49 @@ class _UserProfilePageState extends State<UserProfilePage> {
     }
   }
 
-  // Submit profile data and navigate to the next page
-  void _submitProfile() {
-    if (nameController.text.isEmpty ||
-        ageController.text.isEmpty ||
-        genderController.text.isEmpty ||
-        phoneController.text.isEmpty ||
-        emailController.text.isEmpty ||
-        addressController.text.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please fill out all fields')),
+  void _submitForm() {
+    if (_formKey.currentState!.validate()) {
+      UserSession().currentUser = User(
+        name: nameController.text,
+        age: ageController.text,
+        gender: genderController.text,
+        phone: phoneController.text,
+        email: emailController.text,
+        address: addressController.text,
+        bloodGroup: bloodGroupController.text,
+        emergencyContact: emergencyContactController.text,
+        medicalHistory: medicalHistoryController.text,
+        profilePicturePath: _image?.path ?? '',
       );
-      return;
+
+      Navigator.pushNamed(context, '/feature_buttons');
     }
+  }
 
-    String name = nameController.text;
-    String age = ageController.text;
-    String gender = genderController.text;
-    String phone = phoneController.text;
-    String email = emailController.text;
-    String address = addressController.text;
-
-    print("Name: $name, Age: $age, Gender: $gender, Phone: $phone, Email: $email, Address: $address");
-
-    // Navigate to the features page
-    Navigator.pushReplacementNamed(context, '/feature_buttons');
+  @override
+  void dispose() {
+    nameController.dispose();
+    ageController.dispose();
+    genderController.dispose();
+    phoneController.dispose();
+    emailController.dispose();
+    addressController.dispose();
+    bloodGroupController.dispose();
+    emergencyContactController.dispose();
+    medicalHistoryController.dispose();
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('User Profile'),
-      ),
+      appBar: AppBar(title: Text('User Profile')),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              // Profile Picture Section
+        padding: const EdgeInsets.all(16),
+        child: Form(
+          key: _formKey,
+          child: ListView(
+            children: [
               Center(
                 child: GestureDetector(
                   onTap: _pickImage,
@@ -139,78 +148,60 @@ class _UserProfilePageState extends State<UserProfilePage> {
                 ),
               ),
               SizedBox(height: 20),
-              Text('Please fill in your profile:', style: TextStyle(fontSize: 18)),
-              SizedBox(height: 20),
-
-              // Name Field
-              TextField(
+              TextFormField(
                 controller: nameController,
-                decoration: InputDecoration(
-                  labelText: 'Name',
-                  border: OutlineInputBorder(),
-                ),
+                decoration: InputDecoration(labelText: 'Name'),
+                validator: (val) => val!.isEmpty ? 'Required' : null,
               ),
-              SizedBox(height: 10),
-
-              // Age Field
-              TextField(
+              TextFormField(
                 controller: ageController,
-                decoration: InputDecoration(
-                  labelText: 'Age',
-                  border: OutlineInputBorder(),
-                ),
+                decoration: InputDecoration(labelText: 'Age'),
                 keyboardType: TextInputType.number,
+                validator: (val) => val!.isEmpty ? 'Required' : null,
               ),
-              SizedBox(height: 10),
-
-              // Gender Field
-              TextField(
+              TextFormField(
                 controller: genderController,
-                decoration: InputDecoration(
-                  labelText: 'Gender',
-                  border: OutlineInputBorder(),
-                ),
+                decoration: InputDecoration(labelText: 'Gender'),
+                validator: (val) => val!.isEmpty ? 'Required' : null,
               ),
-              SizedBox(height: 10),
-
-              // Phone Number Field
-              TextField(
+              TextFormField(
                 controller: phoneController,
-                decoration: InputDecoration(
-                  labelText: 'Phone Number',
-                  border: OutlineInputBorder(),
-                ),
+                decoration: InputDecoration(labelText: 'Phone'),
                 keyboardType: TextInputType.phone,
+                validator: (val) => val!.isEmpty ? 'Required' : null,
               ),
-              SizedBox(height: 10),
-
-              // Email Field
-              TextField(
+              TextFormField(
                 controller: emailController,
-                decoration: InputDecoration(
-                  labelText: 'Email',
-                  border: OutlineInputBorder(),
-                ),
+                decoration: InputDecoration(labelText: 'Email'),
                 keyboardType: TextInputType.emailAddress,
+                validator: (val) => val!.isEmpty ? 'Required' : null,
               ),
-              SizedBox(height: 10),
-
-              // Address Field
-              TextField(
+              TextFormField(
                 controller: addressController,
-                decoration: InputDecoration(
-                  labelText: 'Address',
-                  border: OutlineInputBorder(),
-                ),
-                maxLines: 2,
+                decoration: InputDecoration(labelText: 'Address'),
+                validator: (val) => val!.isEmpty ? 'Required' : null,
+              ),
+              TextFormField(
+                controller: bloodGroupController,
+                decoration: InputDecoration(labelText: 'Blood Group'),
+                validator: (val) => val!.isEmpty ? 'Required' : null,
+              ),
+              TextFormField(
+                controller: emergencyContactController,
+                decoration: InputDecoration(labelText: 'Emergency Contact'),
+                keyboardType: TextInputType.phone,
+                validator: (val) => val!.isEmpty ? 'Required' : null,
+              ),
+              TextFormField(
+                controller: medicalHistoryController,
+                decoration: InputDecoration(labelText: 'Medical History'),
+                maxLines: 3,
               ),
               SizedBox(height: 20),
-
-              // Submit Button
               ElevatedButton(
-                onPressed: _submitProfile,
-                child: Text('Submit Profile'),
-              ),
+                onPressed: _submitForm,
+                child: Text('Save & Continue'),
+              )
             ],
           ),
         ),

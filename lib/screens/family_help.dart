@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:http/http.dart' as http;
-import 'add_contact_page.dart' as contact_page; // Aliased import for AddContactPage
-import 'add_medication_page.dart' as medication_page; // Aliased import for AddMedicationPage
+import 'add_contact_page.dart'
+    as contact_page; // Aliased import for AddContactPage
+import 'add_medication_page.dart'
+    as medication_page; // Aliased import for AddMedicationPage
 
 class FamilyHelpPage extends StatefulWidget {
   @override
@@ -15,8 +17,10 @@ class _FamilyHelpPageState extends State<FamilyHelpPage> {
   List<Map<String, String>> contacts = [];
   List<Map<String, String>> medications = [];
   bool isLoading = true;
-  bool isContactDropdownOpen = false; // To toggle the contacts dropdown visibility
-  bool isMedicationDropdownOpen = false; // To toggle the medications dropdown visibility
+  bool isContactDropdownOpen =
+      false; // To toggle the contacts dropdown visibility
+  bool isMedicationDropdownOpen =
+      false; // To toggle the medications dropdown visibility
 
   @override
   void initState() {
@@ -27,7 +31,7 @@ class _FamilyHelpPageState extends State<FamilyHelpPage> {
 
   // Fetch contacts from the server
   Future<void> _fetchContacts() async {
-    const String baseUrl = 'http://192.168.207.249:5000';
+    const String baseUrl = 'http://192.168.1.4:5000';
     try {
       final response = await http.get(Uri.parse('$baseUrl/contacts'));
 
@@ -58,7 +62,7 @@ class _FamilyHelpPageState extends State<FamilyHelpPage> {
 
   // Fetch medications from the server
   Future<void> _fetchMedications() async {
-    const String baseUrl = 'http://192.168.207.249:5000';
+    const String baseUrl = 'http://192.168.1.4:5000';
     try {
       final response = await http.get(Uri.parse('$baseUrl/medications'));
 
@@ -131,7 +135,8 @@ class _FamilyHelpPageState extends State<FamilyHelpPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => contact_page.AddContactPage()), // Using alias here
+                                builder: (context) => contact_page
+                                    .AddContactPage()), // Using alias here
                           ).then((_) {
                             // Refresh the contact list when returning
                             _fetchContacts();
@@ -140,7 +145,8 @@ class _FamilyHelpPageState extends State<FamilyHelpPage> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xff1f597c),
                           foregroundColor: Colors.white,
-                          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 12),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -159,7 +165,8 @@ class _FamilyHelpPageState extends State<FamilyHelpPage> {
                           });
                         },
                         child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 15),
                           decoration: BoxDecoration(
                             color: Color(0xff1f597c),
                             borderRadius: BorderRadius.circular(10),
@@ -190,10 +197,13 @@ class _FamilyHelpPageState extends State<FamilyHelpPage> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10),
-                            boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 5)],
+                            boxShadow: [
+                              BoxShadow(color: Colors.grey, blurRadius: 5)
+                            ],
                           ),
                           child: Container(
-                            height: 300, // Set a fixed height to make the contacts scrollable
+                            height:
+                                300, // Set a fixed height to make the contacts scrollable
                             child: SingleChildScrollView(
                               child: Column(
                                 children: [
@@ -230,7 +240,8 @@ class _FamilyHelpPageState extends State<FamilyHelpPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => medication_page.AddMedicationPage()), // Using alias here
+                                builder: (context) => medication_page
+                                    .AddMedicationPage()), // Using alias here
                           ).then((_) {
                             // Refresh the medication list when returning
                             _fetchMedications();
@@ -239,7 +250,8 @@ class _FamilyHelpPageState extends State<FamilyHelpPage> {
                         style: ElevatedButton.styleFrom(
                           backgroundColor: Color(0xff1f597c),
                           foregroundColor: Colors.white,
-                          padding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 16, vertical: 12),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(10),
                           ),
@@ -254,11 +266,13 @@ class _FamilyHelpPageState extends State<FamilyHelpPage> {
                       GestureDetector(
                         onTap: () {
                           setState(() {
-                            isMedicationDropdownOpen = !isMedicationDropdownOpen;
+                            isMedicationDropdownOpen =
+                                !isMedicationDropdownOpen;
                           });
                         },
                         child: Container(
-                          padding: EdgeInsets.symmetric(vertical: 10, horizontal: 15),
+                          padding: EdgeInsets.symmetric(
+                              vertical: 10, horizontal: 15),
                           decoration: BoxDecoration(
                             color: Color(0xff1f597c),
                             borderRadius: BorderRadius.circular(10),
@@ -289,10 +303,13 @@ class _FamilyHelpPageState extends State<FamilyHelpPage> {
                           decoration: BoxDecoration(
                             color: Colors.white,
                             borderRadius: BorderRadius.circular(10),
-                            boxShadow: [BoxShadow(color: Colors.grey, blurRadius: 5)],
+                            boxShadow: [
+                              BoxShadow(color: Colors.grey, blurRadius: 5)
+                            ],
                           ),
                           child: Container(
-                            height: 300, // Set a fixed height to make the medications scrollable
+                            height:
+                                300, // Set a fixed height to make the medications scrollable
                             child: SingleChildScrollView(
                               child: Column(
                                 children: [
@@ -307,7 +324,8 @@ class _FamilyHelpPageState extends State<FamilyHelpPage> {
                                           color: Color(0xff1f597c),
                                         ),
                                       ),
-                                      subtitle: Text('${medication['dosage']} | ${medication['time']}'),
+                                      subtitle: Text(
+                                          '${medication['dosage']} | ${medication['time']}'),
                                     ),
                                 ],
                               ),

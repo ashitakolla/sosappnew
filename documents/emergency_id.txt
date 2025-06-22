@@ -1,0 +1,18 @@
+Emergency ID
+
+The Emergency ID feature allows responders or helpers to quickly access your vital personal and medical information in case you're unconscious or unable to communicate.
+
+Details shown:
+
+- Full Name
+- Blood Group
+- Emergency Contact Number
+- Phone Number
+- Medical History
+
+Purpose:
+This digital ID is designed to save time in critical moments by showing essential details on a single screen. Ensure the information is always up to date for accuracy during emergencies.
+
+---
+
+End of Guide

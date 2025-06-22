@@ -1,0 +1,20 @@
+Family Help
+
+The Family Help section allows you to manage critical health and contact information for your loved ones.
+
+You can:
+
+1. Add Contact
+   - Add family members who need emergency care tracking.
+   - Includes name and phone number.
+
+2. Add Medication
+   - Track daily medications for your family members.
+   - Store details like medication name, dosage, and time.
+
+Purpose:
+This module ensures that each family member’s emergency needs are accounted for — from medications to emergency outreach.
+
+---
+
+End of Guide

@@ -1,0 +1,49 @@
+Local Emergency Services Directory
+
+This section provides quick access to essential emergency services. Each listing includes a brief description and allows users to call directly by tapping on the contact number in the app.
+
+---
+
+1. Police
+
+For immediate police assistance in emergencies such as theft, violence, or public disturbances.
+→ Call Now: 100
+
+2. Fire Department
+
+For emergencies involving fire hazards, including house fires, electric fires, and chemical fires.
+→ Call Now: 101
+
+3. Ambulance
+
+For medical emergencies requiring urgent transportation to a hospital.
+→ Call Now: 102
+
+4. Poison Control
+
+For expert advice in case of accidental poisoning or ingestion of harmful substances.
+→ Call Now: 1800-11-6117
+
+5. Mental Health Helpline
+
+For mental health support, including anxiety, depression, or emotional crisis.
+→ Call Now: 9152987821
+
+6. Women’s Helpline
+
+For support in situations of abuse, harassment, or violence against women.
+→ Call Now: 1091
+
+7. Child Helpline
+
+For emergency assistance or protection of children in distress.
+→ Call Now: 1098
+
+---
+
+Note:
+Each number can be dialed directly from within the SOS app using the integrated **tap-to-call feature**. Please only use these numbers for genuine emergencies.
+
+---
+
+End of Guide

@@ -33,7 +33,7 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
       return;
     }
 
-    const String baseUrl = 'http://192.168.1.6:5000/medications';
+    const String baseUrl = 'http://192.168.1.4:5000/medications';
     try {
       final response = await http.post(
         Uri.parse(baseUrl),
@@ -41,7 +41,8 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
         body: jsonEncode({
           'name': _nameController.text,
           'dosage': _dosageController.text, // Adding dosage field
-          'time': _selectedTime.format(context), // Adjusted for API compatibility
+          'time':
+              _selectedTime.format(context), // Adjusted for API compatibility
         }),
       );
 
@@ -55,7 +56,9 @@ class _AddMedicationPageState extends State<AddMedicationPage> {
         // Display server-side error
         final errorResponse = jsonDecode(response.body);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(errorResponse['error'] ?? 'Failed to add medication')),
+          SnackBar(
+              content:
+                  Text(errorResponse['error'] ?? 'Failed to add medication')),
         );
       }
     } catch (e) {
